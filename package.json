@@ -9,15 +9,7 @@
     "url": "https://github.com/evildvl/vue-ics.git"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "demo": "vue-cli-service demo",
-    "docs": "npm run docs:serve",
-    "docs:build": "vue-cli-service docs --mode build",
-    "docs:serve": "vue-cli-service docs --mode serve",
-    "prepublish": "vue-cli-service lint && vue-cli-service build",
-    "start": "vue-cli-service serve"
+    "build": "rollup -c"
   },
   "main": "dist/vue-ics.common.js",
   "module": "dist/vue-ics.esm.js",
@@ -34,45 +26,25 @@
     "file-saver": "^2.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^5.0.4",
+    "@types/file-saver": "^2.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
     "@vue/cli-plugin-eslint": "^5.0.4",
-    "@vue/cli-service": "^5.0.4",
-    "babel-eslint": "10.1.0",
-    "cz-conventional-changelog": "^3.0.1",
-    "eslint": "7.7.0",
-    "eslint-plugin-vue": "6.2.2",
-    "vue": "2.6.11",
-    "vue-cli-plugin-p11n": "^0.0.2",
-    "vue-template-compiler": "2.6.11"
+    "eslint": "^8.15.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "rollup": "^2.58.0",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "typescript": "^4.6.4"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+  "peerDependencies": {
+    "vue": "^2.6.11"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions"
   ],
   "jsdelivr": "dist/vue-ics.umd.min.js",
-  "sideeffects": false,
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+  "sideeffects": false
 }

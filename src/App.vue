@@ -6,7 +6,7 @@
     <a @click="remove()">Remove All Events</a>
   </div>
 </template>
-<script>
+<script lang="ts">
 export default {
   name: 'demo',
   data() {
