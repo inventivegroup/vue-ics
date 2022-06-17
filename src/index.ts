@@ -60,12 +60,13 @@ function validateRepeatRule(rrule: IRecuranceRule) {
  * @param {string} string - iCalendar source string
  * @return {string}
  */
-function addCRLF(string: string) {
-  return `\n${string}\n`
+function addCRLF(strings: string[]) {
+  return strings.join(lineEndings);
 }
 
 
 let counter = 0;
+let lineEndings = `\r\n`;
 
 function getUniqueNumber() {
   return counter++;
@@ -129,19 +130,20 @@ const install = (Vue: Vue, globalOptions = { uidDomain: 'evildvl', prodId: 'vueI
       const end = end_year + end_month + end_day + end_time
       const now = now_year + now_month + now_day + now_time
 
-      const Event = `
-    BEGIN:VEVENT
-    UID:${UID}@${globalOptions.uidDomain}
-    ${(options.url) ? 'URL:' + options.url : ''}
-    DESCRIPTION:${options.description}${(rruleString) ? '\n' + rruleString : ''}
-    DTSTAMP;VALUE=DATE-TIME:${now},
-    DTSTART;VALUE=DATE-TIME:${start}
-    DTEND;VALUE=DATE-TIME:${end}
-    LOCATION:${location}
-    ${(options.organizer) ? 'ORGANIZER;CN=' + options.organizer.name + ':MAILTO:' + options.organizer.email : ''}
-    SUMMARY;LANGUAGE=${options.language}:${options.subject}
-    END:VEVENT
-      `
+      const Event = addCRLF([
+        `BEGIN:VEVENT`,
+        `UID:${UID}@${globalOptions.uidDomain}`,
+        `${(options.url) ? 'URL:' + options.url : ''}`,
+        `DESCRIPTION:${options.description}${(rruleString) ? '\n' + rruleString : ''}`,
+        `DTSTAMP;VALUE=DATE-TIME:${now},`,
+        `DTSTART;VALUE=DATE-TIME:${start}`,
+        `DTEND;VALUE=DATE-TIME:${end}`,
+        `LOCATION:${location}`,
+        `${(options.organizer) ? 'ORGANIZER;CN=' + options.organizer.name + ':MAILTO:' + options.organizer.email : ''}`,
+        `SUMMARY;LANGUAGE=${options.language}:${options.subject}`,
+        `END:VEVENT`
+      ].filter(s => s!==''))
+      
       Events.push(Event)
       return Event
     },
@@ -151,14 +153,13 @@ const install = (Vue: Vue, globalOptions = { uidDomain: 'evildvl', prodId: 'vueI
      * @return {string} Calendar in iCalendar format
      */
     calendar: () => {
-      return addCRLF(`
-    BEGIN:VCALENDAR
-    PRODID:${globalOptions.prodId}
-    VERSION:2.0
-    ${Events.join('\n')}
-    END:VCALENDAR
-
-      `.replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''))
+      return addCRLF([
+        `BEGIN:VCALENDAR`,
+        `PRODID:${globalOptions.prodId}`,
+        `VERSION:2.0`,
+        `${Events.join(lineEndings)}`,
+        `END:VCALENDAR`
+      ].filter(s => s!=='')) // .replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, '')
     },
     /**
      * Download iCalendar file
@@ -166,14 +167,13 @@ const install = (Vue: Vue, globalOptions = { uidDomain: 'evildvl', prodId: 'vueI
      * @param {string} filename  - Name of the file without extension
      */
     download: (filename: string) => {
-      const Calendar = addCRLF(`
-    BEGIN:VCALENDAR
-    PRODID:${globalOptions.prodId}
-    VERSION:2.0
-    ${Events.join('\n')}
-    END:VCALENDAR
-
-      `.replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''))
+      const Calendar = addCRLF([
+        `BEGIN:VCALENDAR`,
+        `PRODID:${globalOptions.prodId}`,
+        `VERSION:2.0`,
+        `${Events.join(lineEndings)}`,
+        `END:VCALENDAR`
+      ].filter(s => s!==''));
       const blob = new Blob([Calendar], { type: "text/x-vCalendar;charset=utf-8" });
       saveAs(blob, `${filename}.ics`);
     }
