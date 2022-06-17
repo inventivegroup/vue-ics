@@ -24,3 +24,4 @@ docs/.vuepress/dist
 *.sln
 *.sw*
   
+dist/

@@ -1,6 +1,6 @@
 import { saveAs } from 'file-saver'
-import { IEvent } from 'IEvent'
-import { IRecuranceRule } from 'IRecuranceRule'
+import { IEvent } from './IEvent'
+import { IRecuranceRule } from './IRecuranceRule'
 import Vue from 'vue'
 const version = '__VERSION__'
 

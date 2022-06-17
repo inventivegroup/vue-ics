@@ -1,4 +1,4 @@
-import { IRecuranceRule } from "IRecuranceRule";
+import { IRecuranceRule } from "./IRecuranceRule";
 
 export interface IEvent {
     language: string;

@@ -9,34 +9,28 @@
     "url": "https://github.com/evildvl/vue-ics.git"
   },
   "scripts": {
-    "build": "rollup -c"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
   },
-  "main": "dist/vue-ics.common.js",
-  "module": "dist/vue-ics.esm.js",
-  "unpkg": "dist/vue-ics.umd.min.js",
-  "files": [
-    "dist/vue-ics.common.js",
-    "dist/vue-ics.umd.min.js",
-    "dist/vue-ics.umd.js",
-    "dist/vue-ics.esm.js",
-    "src"
-  ],
+  "main": "dist/vue-ics.cjs.js",
+  "module": "dist/vue-ics.es.js",
+  "unpkg": "dist/vue-ics.umd.js",
   "dependencies": {
-    "core-js": "^3.0.0",
+    "vite-plugin-vue2": "^2.0.1",
+    "vue": "^2.6.14",
     "file-saver": "^2.0.2"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
-    "@vue/cli-plugin-eslint": "^5.0.4",
     "eslint": "^8.15.0",
     "eslint-plugin-vue": "^8.7.1",
-    "rollup": "^2.58.0",
-    "rollup-plugin-clear": "^2.0.7",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "rollup-plugin-vue": "^6.0.0",
-    "typescript": "^4.6.4"
+    "@vitejs/plugin-vue": "^2.3.3",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.34.7"
   },
   "peerDependencies": {
     "vue": "^2.6.11"
