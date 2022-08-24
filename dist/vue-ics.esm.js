@@ -1,6 +1,6 @@
 /*!
  * vue-ics v0.1.5 
- * (c) 2022 Inventive Group
+ * (c) 2022 Stanislav Mihaylov <ceo@pepper.llc>
  * Released under the MIT License.
  */
 import { saveAs } from 'file-saver';
@@ -86,7 +86,7 @@ function validateRepeatRule(rrule) {
  */
 
 
-function addCRLF(string) {
+function addLF(string) {
   return "".concat(string, "\n");
 }
 
@@ -193,7 +193,7 @@ var install = function install(Vue) {
      * @return {string} Calendar in iCalendar format
      */
     calendar: function calendar() {
-      return addCRLF("BEGIN:VCALENDAR\n        PRODID:".concat(options.prodId, "\n        VERSION:2.0\n        ").concat(Events.join('\n'), "\n        END:VCALENDAR").replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''));
+      return addLF(('BEGIN:VCALENDAR\n' + "PRODID:".concat(options.prodId, "\n") + 'VERSION:2.0\n' + "".concat(Events.join('\n'), "\n") + 'END:VCALENDAR').replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''));
     },
 
     /**
@@ -202,7 +202,7 @@ var install = function install(Vue) {
      * @param {string} filename  - Name of the file without extension
      */
     download: function download(filename) {
-      var Calendar = addCRLF("BEGIN:VCALENDAR\n        PRODID:".concat(options.prodId, "\n        VERSION:2.0\n        ").concat(Events.join('\n'), "\n        END:VCALENDAR").replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''));
+      var Calendar = addLF(('BEGIN:VCALENDAR\n' + "PRODID:".concat(options.prodId, "\n") + 'VERSION:2.0\n' + "".concat(Events.join('\n'), "\n") + 'END:VCALENDAR').replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''));
       var blob = new Blob([Calendar], {
         type: "text/x-vCalendar;charset=utf-8"
       });

@@ -2,7 +2,7 @@
   "name": "@inventivegroup/vue-ics",
   "description": "Vue.js plugin for generating ICalendar (.ics) files.",
   "version": "0.1.5",
-  "author": "Inventive Group",
+  "author": "Stanislav Mihaylov <ceo@pepper.llc>",
   "license": "MIT",
   "repository": {
     "type": "git",

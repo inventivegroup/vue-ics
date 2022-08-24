@@ -78,7 +78,7 @@ function validateRepeatRule(rrule) {
  * @param {string} string - iCalendar source string
  * @return {string}
  */
-function addCRLF(string) {
+function addLF(string) {
   return `${string}\n`
 }
 
@@ -189,11 +189,11 @@ const install = (Vue, options = {uidDomain: 'evildvl', prodId: 'vueICS'}) => {
      * @return {string} Calendar in iCalendar format
      */
     calendar: () => {
-      return addCRLF(`BEGIN:VCALENDAR
-        PRODID:${options.prodId}
-        VERSION:2.0
-        ${Events.join('\n')}
-        END:VCALENDAR`
+      return addLF(('BEGIN:VCALENDAR\n' +
+        `PRODID:${options.prodId}\n` +
+        'VERSION:2.0\n' +
+        `${Events.join('\n')}\n` +
+        'END:VCALENDAR')
         .replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''))
     },
     /**
@@ -202,11 +202,11 @@ const install = (Vue, options = {uidDomain: 'evildvl', prodId: 'vueICS'}) => {
      * @param {string} filename  - Name of the file without extension
      */
     download: (filename) => {
-      const Calendar = addCRLF(`BEGIN:VCALENDAR
-        PRODID:${options.prodId}
-        VERSION:2.0
-        ${Events.join('\n')}
-        END:VCALENDAR`
+      const Calendar = addLF(('BEGIN:VCALENDAR\n' +
+        `PRODID:${options.prodId}\n` +
+        'VERSION:2.0\n' +
+        `${Events.join('\n')}\n` +
+        'END:VCALENDAR')
         .replace(/^\s*[\r\n]/gm, "").replace(/^\s+/gm, ''))
       var blob = new Blob([Calendar], {type: "text/x-vCalendar;charset=utf-8"});
       saveAs(blob, `${filename}.ics`);
