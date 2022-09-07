@@ -156,11 +156,20 @@ const install = (Vue, options = {uidDomain: 'evildvl', prodId: 'vueICS'}) => {
       let now_minutes = (`00${(now_date.getMinutes().toString())}`).slice(-2)
       let now_seconds = (`00${(now_date.getSeconds().toString())}`).slice(-2)
 
+      let start_end_value = '';
       let start_time = '';
       let end_time = '';
       if (start_hours + start_minutes + start_seconds + end_hours + end_minutes + end_seconds != 0) {
+        start_end_value = 'DATE-TIME'
         start_time = `T${start_hours}${start_minutes}${start_seconds}`
         end_time = `T${end_hours}${end_minutes}${end_seconds}`
+      } else {
+        start_end_value = 'DATE'
+        
+        end_date.setDate(end_date.getDate() + 1)
+        end_year = (`0000${(end_date.getFullYear().toString())}`).slice(-4)
+        end_month = (`00${((end_date.getMonth() + 1).toString())}`).slice(-2)
+        end_day = (`00${((end_date.getDate()).toString())}`).slice(-2)
       }
       let now_time = `T${now_hours}${now_minutes}${now_seconds}`
 
@@ -173,8 +182,8 @@ const install = (Vue, options = {uidDomain: 'evildvl', prodId: 'vueICS'}) => {
         ${(url) ? 'URL:' + url : ''}
         DESCRIPTION:${description}${(rruleString) ? '\n' + rruleString : ''}
         DTSTAMP;VALUE=DATE-TIME:${now},
-        DTSTART;VALUE=DATE-TIME:${start}
-        DTEND;VALUE=DATE-TIME:${end}
+        DTSTART;VALUE=${start_end_value}:${start}
+        DTEND;VALUE=${start_end_value}:${end}
         LOCATION:${location}
         ${(organizer) ? 'ORGANIZER;CN=' + organizer.name + ':MAILTO:' + organizer.email : ''}
         SUMMARY;LANGUAGE=${language}:${subject}
