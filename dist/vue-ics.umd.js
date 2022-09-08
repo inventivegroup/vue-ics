@@ -174,19 +174,27 @@
         var now_hours = "00".concat(now_date.getHours().toString()).slice(-2);
         var now_minutes = "00".concat(now_date.getMinutes().toString()).slice(-2);
         var now_seconds = "00".concat(now_date.getSeconds().toString()).slice(-2);
+        var start_end_value = '';
         var start_time = '';
         var end_time = '';
 
         if (start_hours + start_minutes + start_seconds + end_hours + end_minutes + end_seconds != 0) {
+          start_end_value = 'DATE-TIME';
           start_time = "T".concat(start_hours).concat(start_minutes).concat(start_seconds);
           end_time = "T".concat(end_hours).concat(end_minutes).concat(end_seconds);
+        } else {
+          start_end_value = 'DATE';
+          end_date.setDate(end_date.getDate() + 1);
+          end_year = "0000".concat(end_date.getFullYear().toString()).slice(-4);
+          end_month = "00".concat((end_date.getMonth() + 1).toString()).slice(-2);
+          end_day = "00".concat(end_date.getDate().toString()).slice(-2);
         }
 
         var now_time = "T".concat(now_hours).concat(now_minutes).concat(now_seconds);
         var start = start_year + start_month + start_day + start_time;
         var end = end_year + end_month + end_day + end_time;
         var now = now_year + now_month + now_day + now_time;
-        var Event = "BEGIN:VEVENT\n        UID:".concat(UID, "@").concat(options.uidDomain, "\n        ").concat(url ? 'URL:' + url : '', "\n        DESCRIPTION:").concat(description).concat(rruleString ? '\n' + rruleString : '', "\n        DTSTAMP;VALUE=DATE-TIME:").concat(now, ",\n        DTSTART;VALUE=DATE-TIME:").concat(start, "\n        DTEND;VALUE=DATE-TIME:").concat(end, "\n        LOCATION:").concat(location, "\n        ").concat(organizer ? 'ORGANIZER;CN=' + organizer.name + ':MAILTO:' + organizer.email : '', "\n        SUMMARY;LANGUAGE=").concat(language, ":").concat(subject, "\n        END:VEVENT\n      ");
+        var Event = "BEGIN:VEVENT\n        UID:".concat(UID, "@").concat(options.uidDomain, "\n        ").concat(url ? 'URL:' + url : '', "\n        DESCRIPTION:").concat(description).concat(rruleString ? '\n' + rruleString : '', "\n        DTSTAMP;VALUE=DATE-TIME:").concat(now, ",\n        DTSTART;VALUE=").concat(start_end_value, ":").concat(start, "\n        DTEND;VALUE=").concat(start_end_value, ":").concat(end, "\n        LOCATION:").concat(location, "\n        ").concat(organizer ? 'ORGANIZER;CN=' + organizer.name + ':MAILTO:' + organizer.email : '', "\n        SUMMARY;LANGUAGE=").concat(language, ":").concat(subject, "\n        END:VEVENT\n      ");
         Events.push(Event);
         return Event;
       },
